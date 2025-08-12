@@ -1,0 +1,22 @@
+# check for columns Id and CreationDate
+- criticality: error
+  check:
+    function: is_not_null
+    for_each_column:         # apply the same check to each column
+      - Id
+      - CreationDate
+
+# check for CreationDate not in the future
+- criticality: error
+  check:
+    function: is_not_in_future
+    arguments:
+      column: CreationDate   # optional: offset: 86400  # seconds
+
+# check for PostTypeId in an allowed list
+- criticality: warn
+  check:
+    function: is_in_list
+    arguments:
+      column: PostTypeId
+      allowed: [1, 2, 3, 4]
